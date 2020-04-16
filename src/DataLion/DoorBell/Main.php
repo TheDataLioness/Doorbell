@@ -119,6 +119,7 @@ class Main extends PluginBase implements Listener {
 
         $doorbell = Doorbell::getByPosition($e->getBlock()->asPosition());
         if(!is_null($doorbell)) $doorbell->delete();
+        $e->getPlayer()->sendMessage(C::GREEN."[Doorbell] Doorbell deleted");
     }
 
     
