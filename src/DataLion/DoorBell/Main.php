@@ -118,7 +118,8 @@ class Main extends PluginBase implements Listener {
         if($e->isCancelled()) return;
 
         $doorbell = Doorbell::getByPosition($e->getBlock()->asPosition());
-        if(!is_null($doorbell)) $doorbell->delete();
+        if(is_null($doorbell)) return;
+        $doorbell->delete();
         $e->getPlayer()->sendMessage(C::GREEN."[Doorbell] Doorbell deleted");
     }
 
