@@ -27,7 +27,7 @@ class Setup
                 if (Server::getInstance()->isLevelLoaded($result["level"])) {
                     $level = Server::getInstance()->getLevelByName($result["level"]);
                 } else {
-                    if (Server::getInstance()->loadLevel($result["plot_world"])) {
+                    if (Server::getInstance()->loadLevel($result["level"])) {
                         $level = Server::getInstance()->getLevelByName($result["level"]);
                     }
                 }
