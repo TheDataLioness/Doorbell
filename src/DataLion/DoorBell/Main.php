@@ -23,10 +23,8 @@ class Main extends PluginBase implements Listener {
     private static $db;
     private static $instance;
 
-
     /** @var Task[] */
     public static $doorbellPlaceSession;
-
 
     /**
      * @return \SQLite3
@@ -36,7 +34,6 @@ class Main extends PluginBase implements Listener {
         return self::$db;
     }
 
-
     /**
      * @return Main
      */
@@ -44,7 +41,6 @@ class Main extends PluginBase implements Listener {
     {
         return self::$instance;
     }
-
 
     public function onEnable(): void
     {
@@ -70,8 +66,6 @@ class Main extends PluginBase implements Listener {
                     return true;
                 }
                 $sender->sendMessage(C::RED."[DoorBell] You can only use this command in-game.");
-
-
 
 				return true;
 			default:
@@ -107,7 +101,6 @@ class Main extends PluginBase implements Listener {
         //CREATE NEW INSTANCE OF DOORBELL
         Doorbell::createDoorbell($e->getBlock()->getPos());
         $e->getPlayer()->sendMessage(C::GREEN."[Doorbell] Doorbell created");
-
     }
 
     public function onBlockBreak(BlockBreakEvent $e){
@@ -124,10 +117,4 @@ class Main extends PluginBase implements Listener {
         $doorbell = Doorbell::getByPosition($e->getBlock()->getPos());
         if(!is_null($doorbell)) $doorbell->activate();
     }
-
-
-
-
-
-
 }
