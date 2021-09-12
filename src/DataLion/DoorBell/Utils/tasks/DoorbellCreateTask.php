@@ -11,15 +11,10 @@ use pocketmine\utils\TextFormat;
 
 class DoorbellCreateTask extends Task
 {
-    private $playername;
+	private bool $cancel = false;
 
-    /** @var bool */
-    private $cancel = false;
-
-    public function __construct(string $playername)
-    {
-        $this->playername = $playername;
-    }
+    public function __construct(private string $playername)
+    {}
 
 
     /**
@@ -39,14 +34,14 @@ class DoorbellCreateTask extends Task
     }
 
 
-    public function onRun(int $currentTick)
+    public function onRun(): void
     {
         if($this->isCanceled()) return;
         if(!isset(Main::$doorbellPlaceSession[$this->playername])) return;
         unset(Main::$doorbellPlaceSession[$this->playername]);
 
 
-        $player = Server::getInstance()->getPlayer($this->playername);
+        $player = Server::getInstance()->getPlayerExact($this->playername);
 
 
         if(!is_null($player)) $player->sendMessage(TextFormat::GREEN."[Doorbell] Creation time ended.");

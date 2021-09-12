@@ -87,7 +87,7 @@ class Main extends PluginBase implements Listener {
         $e->cancel();
 
         //CHECK IF DOORBELL ALREADY EXISTS THERE
-        $doorbell = Doorbell::getByPosition($e->getBlock()->getPos());
+        $doorbell = Doorbell::getByPosition($e->getBlock()->getPosition());
 
         if(!is_null($doorbell)){
             $e->getPlayer()->sendMessage(C::RED."[Doorbell] There is already a doorbell here.");
@@ -99,14 +99,14 @@ class Main extends PluginBase implements Listener {
         unset(self::$doorbellPlaceSession[$e->getPlayer()->getName()]);
 
         //CREATE NEW INSTANCE OF DOORBELL
-        Doorbell::createDoorbell($e->getBlock()->getPos());
+        Doorbell::createDoorbell($e->getBlock()->getPosition());
         $e->getPlayer()->sendMessage(C::GREEN."[Doorbell] Doorbell created");
     }
 
     public function onBlockBreak(BlockBreakEvent $e){
         if($e->isCancelled()) return;
 
-        $doorbell = Doorbell::getByPosition($e->getBlock()->getPos());
+        $doorbell = Doorbell::getByPosition($e->getBlock()->getPosition());
         if(is_null($doorbell)) return;
         $doorbell->delete();
         $e->getPlayer()->sendMessage(C::GREEN."[Doorbell] Doorbell deleted");
@@ -114,7 +114,7 @@ class Main extends PluginBase implements Listener {
 
     public function onDoorbellClick(PlayerInteractEvent $e){
         if($e->isCancelled()) return;
-        $doorbell = Doorbell::getByPosition($e->getBlock()->getPos());
+        $doorbell = Doorbell::getByPosition($e->getBlock()->getPosition());
         if(!is_null($doorbell)) $doorbell->activate();
     }
 }
