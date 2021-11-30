@@ -5,7 +5,6 @@ namespace DataLion\DoorBell\Utils;
 
 
 use DataLion\DoorBell\Main;
-use pocketmine\level\Level;
 use pocketmine\Server;
 
 class Setup
@@ -23,12 +22,15 @@ class Setup
             $y = $result["y"];
             $z = $result["z"];
             $level = null;
-            if (Server::getInstance()->isLevelGenerated($result["level"])) {
-                if (Server::getInstance()->isLevelLoaded($result["level"])) {
-                    $level = Server::getInstance()->getLevelByName($result["level"]);
+
+
+            $worldManager = Server::getInstance()->getWorldManager();
+            if ($worldManager->isWorldGenerated($result["level"])) {
+                if ($worldManager->isWorldLoaded($result["level"])) {
+                    $level = $worldManager->getWorldByName($result["level"]);
                 } else {
-                    if (Server::getInstance()->loadLevel($result["level"])) {
-                        $level = Server::getInstance()->getLevelByName($result["level"]);
+                    if ($worldManager->loadWorld($result["level"])) {
+                        $level = $worldManager->getWorldByName($result["level"]);
                     }
                 }
             }

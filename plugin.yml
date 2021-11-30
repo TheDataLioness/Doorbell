@@ -1,21 +1,16 @@
+---
 name: DoorBell
 main: DataLion\DoorBell\Main
 version: 1.0.0
-api: 3.0.0
-
+api:
+- 4.0.0
 author: DataLion
-
 description: Super Simple Doorbell plugin
-
 commands:
- createdoorbell:
-  permission: createdoorbell.command
-  description: Create a doorbell
-
-
+  createdoorbell:
+    permission: createdoorbell.command
+    description: Create a doorbell
 permissions:
- createdoorbell.command:
-  description: Create a doorbell perm
-
-
-
+  createdoorbell.command:
+    description: Create a doorbell perm
+...

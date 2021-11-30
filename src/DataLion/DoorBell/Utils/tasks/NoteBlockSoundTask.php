@@ -4,22 +4,18 @@
 namespace DataLion\DoorBell\Utils\tasks;
 
 
-use DataLion\DoorBell\Sounds\NoteBlockSound;
-
-use pocketmine\level\Position;
+use pocketmine\world\Position;
 use pocketmine\scheduler\Task;
+use pocketmine\world\sound\NoteInstrument;
+use pocketmine\world\sound\NoteSound;
 
 class NoteBlockSoundTask extends Task
 {
-    private $position;
+    public function __construct(private Position $position)
+    {}
 
-    public function __construct(Position $position)
+    public function onRun(): void
     {
-        $this->position = $position;
-    }
-
-    public function onRun(int $currentTick)
-    {
-        $this->position->getLevel()->addSound(new NoteBlockSound($this->position, 6));
+        $this->position->getWorld()->addSound($this->position, new NoteSound(NoteInstrument::PIANO(), 6));
     }
 }
