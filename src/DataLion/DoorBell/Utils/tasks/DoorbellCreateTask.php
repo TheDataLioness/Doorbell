@@ -12,9 +12,12 @@ use pocketmine\utils\TextFormat;
 class DoorbellCreateTask extends Task
 {
 	private bool $cancel = false;
+    private string $playername;
 
-    public function __construct(private string $playername)
-    {}
+    public function __construct(string $playername)
+    {
+        $this->playername = $playername;
+    }
 
 
     /**

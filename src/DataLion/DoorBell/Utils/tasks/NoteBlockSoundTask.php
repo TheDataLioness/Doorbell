@@ -11,8 +11,13 @@ use pocketmine\world\sound\NoteSound;
 
 class NoteBlockSoundTask extends Task
 {
-    public function __construct(private Position $position)
-    {}
+
+    private Position $position;
+
+    public function __construct(Position $position)
+    {
+        $this->position = $position;
+    }
 
     public function onRun(): void
     {
