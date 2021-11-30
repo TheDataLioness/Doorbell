@@ -20,11 +20,11 @@ use pocketmine\utils\TextFormat as C;
 
 class Main extends PluginBase implements Listener {
 
-    private static $db;
-    private static $instance;
+    private static \SQLite3 $db;
+    private static Main $instance;
 
     /** @var Task[] */
-    public static $doorbellPlaceSession;
+    public static array $doorbellPlaceSession;
 
     /**
      * @return \SQLite3
