@@ -1,0 +1,18 @@
+
+# If you'd like to disable a button, just change it to false.
+
+# Example: Oak Button: false
+buttonTypes:
+  Stone Button: true
+  Warped Button: true
+  Birch Button: true
+  Acacia Button: true
+  Cherry Button: true
+  Crimson Button: true
+  Dark Oak Button: true
+  Jungle Button: true
+  Mangrove Button: true
+  Oak Button: true
+  Polished Blackstone Button: true
+  Spruce Button: true
+

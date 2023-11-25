@@ -7,7 +7,6 @@ namespace DataLion\DoorBell;
 use DataLion\DoorBell\Utils\Doorbell;
 use DataLion\DoorBell\Utils\Setup;
 use DataLion\DoorBell\Utils\tasks\DoorbellCreateTask;
-use pocketmine\block\BlockLegacyIds;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
@@ -16,20 +15,23 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
 use pocketmine\scheduler\Task;
+use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat as C;
+use SQLite3;
 
 class Main extends PluginBase implements Listener {
 
-    private static \SQLite3 $db;
+    private static SQLite3 $db;
     private static Main $instance;
+    private Config $config;
 
     /** @var Task[] */
     public static array $doorbellPlaceSession;
 
     /**
-     * @return \SQLite3
+     * @return SQLite3
      */
-    public static function getDb(): \SQLite3
+    public static function getDb(): SQLite3
     {
         return self::$db;
     }
@@ -45,11 +47,16 @@ class Main extends PluginBase implements Listener {
     public function onEnable(): void
     {
         self::$instance = $this;
-        self::$db = new \SQLite3($this->getDataFolder()."doorbell.db");
+        self::$db = new SQLite3($this->getDataFolder()."doorbell.db");
 
         Setup::setupTable();
         Setup::loadBells();
 
+        if(!file_exists($this->getDataFolder() . "config.yml")){
+            $this->saveResource("config.yml");
+        }
+
+        $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML);
 
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
@@ -75,10 +82,16 @@ class Main extends PluginBase implements Listener {
 
 
 	public function onCreateClick(PlayerInteractEvent $e){
-        $blockid = $e->getBlock()->getId();
+        $blockid = $e->getBlock()->getName();
+
+        $e->getPlayer()->sendMessage($blockid);
 
         //CHECK IF CLICKED BLOCK IS A BUTTON
-        if($blockid !== BlockLegacyIds::STONE_BUTTON && $blockid !== BlockLegacyIds::WOODEN_BUTTON) return;
+        $buttonTypes = $this->config->get('buttonTypes');
+
+        if (!isset($buttonTypes[$blockid]) || !$buttonTypes[$blockid]) return;
+
+
 
         //CHECK IF SESSION EXISTS
         if(!isset(self::$doorbellPlaceSession[$e->getPlayer()->getName()])) return;
