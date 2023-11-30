@@ -84,8 +84,6 @@ class Main extends PluginBase implements Listener {
 	public function onCreateClick(PlayerInteractEvent $e){
         $blockid = $e->getBlock()->getName();
 
-        $e->getPlayer()->sendMessage($blockid);
-
         //CHECK IF CLICKED BLOCK IS A BUTTON
         $buttonTypes = $this->config->get('buttonTypes');
 
